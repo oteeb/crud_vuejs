@@ -56,9 +56,16 @@ export default {
   name: "Updates",
   data() {
     return {
-      applicantUpdate: {
+      loading: true,
+      errored: false,
+      url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
+
+      applicant: {
+        brandId: "",
+        modelCode: "",
         name: "",
-        job: "",
+        modelYear: "",
+        fuel: "",
       },
     };
   },

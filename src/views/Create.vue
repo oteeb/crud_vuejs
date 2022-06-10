@@ -8,31 +8,64 @@
             <h1>Create</h1>
             <div class="row">
               <div class="form-group">
-                <label for="exampleInputEmail1">Name</label>
+                <label for="exampleInputEmail1">BrandID</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter Name"
-                  v-model="applicant.name"
+                  placeholder="Enter BrandID"
+                  v-model="applicant.brandId"
                 />
-                <small id="emailHelp" class="form-text text-muted"
-                  >Enter your Name .</small
+                <small class="form-text text-muted"
+                  >Enter your BrandID .</small
                 >
               </div>
 
               <div class="form-group">
-                <label for="exampleInputPassword1">Job</label>
+                <label for="exampleInputPassword1">ModelCode</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Job"
-                  v-model="applicant.job"
+                  placeholder="MD-"
+                  v-model="applicant.modelCode"
                 />
-                <small id="emailHelp" class="form-text text-muted"
-                  >Enter your Job .</small
+                <small class="form-text text-muted"
+                  >Enter your ModelCode .</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Name"
+                  v-model="applicant.name"
+                />
+                <small class="form-text text-muted"
+                  >Enter your Name .</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">ModelYear</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ModelYear"
+                  v-model="applicant.modelYear"
+                />
+                <small class="form-text text-muted"
+                  >Enter your ModelYear .</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Fuel</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Fuel"
+                  v-model="applicant.fuel"
+                />
+                <small class="form-text text-muted"
+                  >Enter your Fuel .</small
                 >
               </div>
 
@@ -91,35 +124,54 @@ export default {
     return {
       loading: true,
       errored: false,
+      url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
 
       applicant: {
+        brandId: "",
+        modelCode: "",
         name: "",
-        job: "",
+        modelYear: "",
+        fuel: "",
       },
     };
   },
   methods: {
     Clear() {
+      this.applicant.brandId = "";
+      this.applicant.modelCode = "";
       this.applicant.name = "";
-      this.applicant.job = "";
+      this.applicant.modelYear = "";
+      this.applicant.fuel = "";
     },
     CreateForm(event) {
-      if (!this.applicant.name) {
-        alert("กรุณากรอก Name !!");
-        return;
-      }else if(this.applicant.name.length < 5){
-        alert("Name ต้องไม่น้อยกว่า 5 ตัวตัวอักษร !!");
+      if (!this.applicant.brandId) {
+        alert("กรุณากรอก BrandId !!");
         return;
       }
-      if (!this.applicant.job) {
-        alert("กรุณากรอก Job !!");
+      if(!this.applicant.modelCode){
+        alert("กรุณากรอก ModelCode !!");
+        return;
+      }
+      if(!this.applicant.name){
+        alert("กรุณากรอก Name !!");
+        return;
+      }else if(this.applicant.name.length < 3){
+        alert("Name ต้องไม่น้อยกว่า 3 ตัวตัวอักษร !!");
+        return;
+      }
+      if (!this.applicant.fuel) {
+        alert("กรุณากรอก ModelYear !!");
         return;
       }
       if (this.applicant) {
+        alert(this.applicant.modelCode);
         axios
-          .post("https://reqres.in/api/users", {
-            name: this.applicant.name,
-            job: this.applicant.job,
+          .post(this.url + "/api/vehicle-model/store?", {
+              brandId: this.applicant.brandId,
+              modelCode: this.applicant.modelCode,
+              name: this.applicant.name,
+              modelYear: this.applicant.modelYear,
+              fuel: this.applicant.fuel,
           })
           .then((response) => {
             this.applicant = response.data;
