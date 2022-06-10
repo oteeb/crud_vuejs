@@ -159,7 +159,7 @@ export default {
         
       }else  {
         alert("fuel ต้องเป็น D & S เท่านั้น !!");
-        return;
+        
           
       }
       //alert(JSON.stringify(this.applicant));
