@@ -9,15 +9,16 @@
             <div class="row">
               <div class="form-group">
                 <label for="exampleInputEmail1">BrandID</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter BrandID"
-                  v-model="applicant.brandId"
-                />
-                <small class="form-text text-muted"
-                  >Enter your BrandID .</small
-                >
+
+                <select v-model="applicant.brandId" class="form-control" >
+                  <option disabled value="">Please select one</option>
+                  <option v-for="currency in viewbrand" v-bind:value="currency.brandId">
+                    {{ currency.brandName }}
+                  </option>
+                </select>
+
+                <small class="form-text text-muted">Enter your BrandID .</small>
+                
               </div>
 
               <div class="form-group">
@@ -74,39 +75,9 @@
               <button type="button" class="btn btn-danger" @click="Clear">
                 Clear
               </button>
-              <p class="center">#Spy {{ JSON.stringify(applicant) }}</p>
 
-              <section v-if="errored">
-                <p>
-                  ขออภัย เราไม่สามารถเรียกข้อมูลนี้ได้ในขณะนี้
-                  โปรดลองอีกครั้งในภายหลัง
-                </p>
-              </section>
 
-              <section v-else>
-                <div v-if="loading">Loading...</div>
-
-                <div v-else>
-                  <table class="table table-sm">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Job</th>
-                        <th scope="col">CreatedAt</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-bind:key="applicant.id">
-                        <th scope="row">{{ applicant.id }}</th>
-                        <td>{{ applicant.name }}</td>
-                        <td>{{ applicant.job }}</td>
-                        <td>{{ applicant.createdAt }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+              
             </div>
           </form>
         </div>
@@ -122,6 +93,7 @@ export default {
   name: "User",
   data() {
     return {
+      viewbrand: [],
       loading: true,
       errored: false,
       url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
@@ -134,6 +106,9 @@ export default {
         fuel: "",
       },
     };
+  },
+  mounted() {
+    this.carbrand();
   },
   methods: {
     Clear() {
@@ -160,11 +135,9 @@ export default {
         return;
       }
       if (!this.applicant.fuel) {
-        alert("กรุณากรอก ModelYear !!");
+        alert("กรุณากรอก fuel !!");
         return;
-      }
-      if (this.applicant) {
-        alert(this.applicant.modelCode);
+      }else if(this.applicant.fuel === "D" || this.applicant.fuel === "S"){
         axios
           .post(this.url + "/api/vehicle-model/store?", {
               brandId: this.applicant.brandId,
@@ -174,21 +147,38 @@ export default {
               fuel: this.applicant.fuel,
           })
           .then((response) => {
-            this.applicant = response.data;
-            console.log(this.applicant);
-            alert("เพิ่มข้อมูลสำเสร็จ");
+            alert(response.data.message);
+            this.$router.push({name:'home'});
             event.preventDefault();
           })
           .catch((error) => {
             console.log(error);
-            this.errored = true;
+            alert(error.response.data.message);
+            
           })
-          .finally(() => (this.loading = false));
+        
+      }else  {
+        alert("fuel ต้องเป็น D & S เท่านั้น !!");
+        return;
+          
       }
-
       //alert(JSON.stringify(this.applicant));
       event.preventDefault();
     },
+    carbrand() {
+      axios
+        .get(this.url + "/api/vehicle-model/brand", {})
+        .then((response) => {
+          this.viewbrand = response.data;
+          console.log(this.viewbrand);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.erroredview = true;
+        });
+    }
+
+
   },
 };
 </script>

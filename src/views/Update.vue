@@ -1,6 +1,5 @@
 <template>
   <div class="Updates">
-    {{ this.$route.params.id }}
     <!--Update-->
     <div class="container">
       <div class="row">
@@ -16,21 +15,21 @@
                   class="form-control"
                   placeholder="Enter BrandID"
                   v-model="applicantUpdate.modelId"
+                  disabled
                 />
                 <small class="form-text text-muted">Enter your ModelId .</small>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">BrandID</label>
                   
-                <select class="form-control" >
+                <select v-model="applicantUpdate.brandId" class="form-control" >
                   <option disabled value="">Please select one</option>
-                  <option v-for="currency in viewbrand" v-bind:key="currency.brandId">
+                  <option v-for="currency in viewbrand" v-bind:value="currency.brandId">
                     {{ currency.brandName }}
                   </option>
                 </select>
-
-
                 <small class="form-text text-muted">Enter your BrandID .</small>
+                
               </div>
 
               <div></div>
@@ -84,7 +83,7 @@
               <button type="button" class="btn btn-danger" @click="Clear">
                 Clear
               </button>
-              <p class="center">#Spy {{ JSON.stringify(applicantUpdate) }}</p>
+              
             </div>
           </form>
         </div>
@@ -114,7 +113,9 @@ export default {
   },
 
   mounted() {
+    console.log(this.$route.params.id );
     this.carbrand();
+    this.cardetails();
   },
   methods: {
     Clear() {
@@ -126,24 +127,22 @@ export default {
       this.applicantUpdate.fuel = "";
     },
     Update() {
-      if (!this.applicantUpdate.modelId) {
-        alert("กรุณากรอก ModelId !!");
-        return;
-      }
-      if (!this.applicantUpdate.job) {
-        alert("กรุณากรอก Job !!");
-        return;
-      }
+      
       if (this.applicantUpdate) {
         axios
-          .put("https://reqres.in/api/users/2", {
+          .put(this.url + "/api/vehicle-model/update", {
+            modelId: this.applicantUpdate.modelId,
+            brandId: this.applicantUpdate.brandId,
+            modelCode: this.applicantUpdate.modelCode,
             name: this.applicantUpdate.name,
-            job: this.applicantUpdate.job,
+            modelYear: this.applicantUpdate.modelYear,
+            fuel: this.applicantUpdate.fuel,
           })
           .then((response) => {
             this.applicantUpdate = response.data;
             console.log(this.applicantUpdate);
-            alert("Update สำเสร็จ");
+            alert(response.data.message);
+            this.$router.push({name:'home'});
           })
           .catch((error) => {
             console.log(error);
@@ -161,6 +160,34 @@ export default {
         .catch((error) => {
           console.log(error);
           this.erroredview = true;
+        });
+    },
+    cardetails() {
+      axios
+        .get(this.url + "/api/vehicle-model/show", {
+          params: {
+            modelId: this.$route.params.id,
+          },
+        })
+        .then((response) => {
+
+          this.applicantUpdate.modelId = response.data.data.modelId;
+          this.applicantUpdate.brandId = response.data.data.brandId;
+          this.applicantUpdate.modelCode = response.data.data.modelCode;
+          this.applicantUpdate.name = response.data.data.name;
+          this.applicantUpdate.modelYear = response.data.data.modelYear;
+          this.applicantUpdate.fuel = response.data.data.fuel;
+          //alert(JSON.stringify(this.view));
+          console.log(this.response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.erroredview = true;
+        })
+        .finally(() => {
+          this.loadingview = false;
+          return;
+        
         });
     },
   },

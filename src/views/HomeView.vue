@@ -5,40 +5,6 @@
       <div class="row">
         <div class="col">
           <h1>List car</h1>
-
-          <div class="card w-50">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">page</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter page"
-                  v-model="page"
-                />
-                <small class="form-text text-muted">Enter your page .</small>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">perPage</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter page"
-                  v-model="perPage"
-                />
-                <small class="form-text text-muted">Enter your perPage .</small>
-              </div>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click.prevent="ListUsers"
-              >
-                View
-              </button>
-              <br /><br />
-
-            </div>
-          </div>
           
           <br />
           <section v-if="erroredview">
@@ -85,7 +51,7 @@
                       >
                         Delete
                       </button>&nbsp;
-                      <router-link class="btn btn-secondary" v-bind:key="currency.modelId" to="/Update">Edit</router-link>
+                      <router-link class="btn btn-secondary" :to="{name:'Update',params:{id:currency.modelId}}">Edit</router-link>
                     </td>
                   </tr>
                   Total = {{ view.total }}
@@ -122,12 +88,13 @@ export default {
     };
   },
   mounted() {
+    console.log();
     this.ListUsers();
   },
   methods: {
     ListUsers() {
       axios
-        .get(this.url + "/api/vehicle-model?", {
+        .get(this.url + "/api/vehicle-model", {
           params: {
             page: this.page,
             perPage: this.perPage,
@@ -161,7 +128,7 @@ export default {
         .then((response) => {
           this.view = response.data;
           console.log(this.view);
-          alert("ลบข้อมูลสำเสร็จ");
+          alert(response.data.message);
           this.ListUsers();
         })
         .catch((error) => {

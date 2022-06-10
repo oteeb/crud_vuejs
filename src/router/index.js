@@ -15,7 +15,7 @@ const routes = [
     component: Create
   },
   {
-    path: '/Update',
+    path: '/Update/:id',
     name: 'Update',
     component: Update
   },

@@ -31,80 +31,13 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/Create">Create</router-link>
             </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/Update">Update</router-link>
-            </li>
           </ul>
         </div>
-
-        <form class="form-inline my-2 my-lg-0" @submit.prevent="cardetails">
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-              v-model="modelId"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="submit">
-                Search
-              </button>
-            </div>
-          </div>
-        </form>
       </div>
     </nav>
 
     <br />
-    <h1>View Search</h1>
-    <section v-if="erroredview">
-      <p>
-        ขออภัย เราไม่สามารถเรียกข้อมูลนี้ได้ในขณะนี้ โปรดลองอีกครั้งในภายหลัง
-      </p>
-    </section>
 
-    <section v-else>
-      <div v-if="loadingview">Loading...</div>
-
-      <div v-else>
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">ModelId</th>
-
-              <th scope="col">ModelCode</th>
-              <th scope="col">Name</th>
-              <th scope="col">BrandName</th>
-              <th scope="col">ModelYear</th>
-              <th scope="col">Fuel</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="currency in view" v-bind:key="currency.modelId">
-              <th scope="row">{{ currency.modelId }}</th>
-
-              <td>{{ currency.modelCode }}</td>
-              <td>{{ currency.name }}</td>
-              <td>{{ currency.brandName }}</td>
-              <td>{{ currency.modelYear }}</td>
-              <td>{{ currency.fuel }}</td>
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  @click="alertttt(currency.modelId)"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
     <br />
     <router-view></router-view>
   </div>
@@ -142,7 +75,6 @@ export default {
         .finally(() => {
           this.loadingview = false;
           return;
-        
         });
     },
   },
