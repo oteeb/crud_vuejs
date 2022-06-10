@@ -1,5 +1,6 @@
 <template>
   <div class="Updates">
+    {{ this.$route.params.id }}
     <!--Update-->
     <div class="container">
       <div class="row">
@@ -9,31 +10,74 @@
             <h1>Edit</h1>
             <div class="row">
               <div class="form-group">
-                <label for="exampleInputEmail1">Name</label>
+                <label for="exampleInputEmail1">ModelId</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="Name"
-                  aria-describedby="NameHelp"
-                  placeholder="Enter Name"
-                  v-model="applicantUpdate.name"
+                  placeholder="Enter BrandID"
+                  v-model="applicantUpdate.modelId"
                 />
-                <small id="NameHelp" class="form-text text-muted"
-                  >Enter your Name .</small
+                <small class="form-text text-muted">Enter your ModelId .</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">BrandID</label>
+                  
+                <select class="form-control" >
+                  <option disabled value="">Please select one</option>
+                  <option v-for="currency in viewbrand" v-bind:key="currency.brandId">
+                    {{ currency.brandName }}
+                  </option>
+                </select>
+
+
+                <small class="form-text text-muted">Enter your BrandID .</small>
+              </div>
+
+              <div></div>
+
+              <div class="form-group">
+                <label for="exampleInputPassword1">ModelCode</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="MD-"
+                  v-model="applicantUpdate.modelCode"
+                />
+                <small class="form-text text-muted"
+                  >Enter your ModelCode .</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Job</label>
+                <label for="exampleInputPassword1">Name</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="Job"
-                  placeholder="Job"
-                  v-model="applicantUpdate.job"
+                  placeholder="Name"
+                  v-model="applicantUpdate.name"
                 />
-                <small id="JobHelp" class="form-text text-muted"
-                  >Enter your Job .</small
+                <small class="form-text text-muted">Enter your Name .</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">ModelYear</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ModelYear"
+                  v-model="applicantUpdate.modelYear"
+                />
+                <small class="form-text text-muted"
+                  >Enter your ModelYear .</small
                 >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Fuel</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Fuel"
+                  v-model="applicantUpdate.fuel"
+                />
+                <small class="form-text text-muted">Enter your Fuel .</small>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               &nbsp;
@@ -56,11 +100,10 @@ export default {
   name: "Updates",
   data() {
     return {
-      loading: true,
-      errored: false,
+      viewbrand: [],
       url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
-
-      applicant: {
+      applicantUpdate: {
+        modelId: "",
         brandId: "",
         modelCode: "",
         name: "",
@@ -70,14 +113,21 @@ export default {
     };
   },
 
+  mounted() {
+    this.carbrand();
+  },
   methods: {
     Clear() {
+      this.applicantUpdate.modelId = "";
+      this.applicantUpdate.brandId = "";
+      this.applicantUpdate.modelCode = "";
       this.applicantUpdate.name = "";
-      this.applicantUpdate.job = "";
+      this.applicantUpdate.modelYear = "";
+      this.applicantUpdate.fuel = "";
     },
     Update() {
-      if (!this.applicantUpdate.name) {
-        alert("กรุณากรอก Name !!");
+      if (!this.applicantUpdate.modelId) {
+        alert("กรุณากรอก ModelId !!");
         return;
       }
       if (!this.applicantUpdate.job) {
@@ -100,6 +150,18 @@ export default {
             alert(error);
           });
       }
+    },
+    carbrand() {
+      axios
+        .get(this.url + "/api/vehicle-model/brand", {})
+        .then((response) => {
+          this.viewbrand = response.data;
+          console.log(this.viewbrand);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.erroredview = true;
+        });
     },
   },
 };

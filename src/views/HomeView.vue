@@ -62,7 +62,7 @@
                     <th scope="col">BrandName</th>
                     <th scope="col">ModelYear</th>
                     <th scope="col">Fuel</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -84,7 +84,8 @@
                         @click="alertttt(currency.modelId)"
                       >
                         Delete
-                      </button>
+                      </button>&nbsp;
+                      <router-link class="btn btn-secondary" v-bind:key="currency.modelId" to="/Update">Edit</router-link>
                     </td>
                   </tr>
                   Total = {{ view.total }}
@@ -94,75 +95,6 @@
           </section>
 
           <br />
-
-          <h1>Car Brand</h1>
-
-          <div class="card w-50">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Brand</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter brand"
-                  v-model="brand"
-                />
-                <small class="form-text text-muted">Enter your page .</small>
-              </div>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click.prevent="ListUsers"
-              >
-                View
-              </button>
-            </div>
-          </div>
-
-
-          <br />
-          <section v-if="erroredview">
-            <p>
-              ขออภัย เราไม่สามารถเรียกข้อมูลนี้ได้ในขณะนี้
-              โปรดลองอีกครั้งในภายหลัง
-            </p>
-          </section>
-
-          <section v-else>
-            <div v-if="loadingview">Loading...</div>
-
-            <div v-else>
-              <table class="table table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">BrandId</th>
-                    <th scope="col">BrandName</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="currency in viewbrand"
-                    v-bind:key="currency.brandId"
-                  >
-                    <th scope="row">{{ currency.brandId }}</th>
-                    <td>{{ currency.brandName }}</td>
-
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        @click="alertttt(currency.brandId)"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
 
         </div>
       </div>
@@ -183,8 +115,7 @@ export default {
       brandID: "",
       modelCode: "",
       name: "",
-      brand: "hon",
-      modelId: 40,
+      modelId: "",
       url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
       loadingview: true,
       erroredview: false,
@@ -211,62 +142,36 @@ export default {
           this.erroredview = true;
         })
         .finally(() => (this.loadingview = false));
-
-      axios
-        .get(this.url + "/api/vehicle-model/brand", {
-          params: {
-            brand: this.brand,
-          },
-        })
-        .then((response) => {
-          this.viewbrand = response.data;
-          console.log(this.viewbrand);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.erroredview = true;
-        });
     },
 
-    alertttt() {
+    alertttt(id) {
+      
       if (confirm("ต้องการ ลบข้อมูล หรือ ไม่?")) {
-        this.Delete();
+        this.Delete(id);
+        
       }
     },
     Delete(id) {
       axios
-        .delete("https://reqres.in/api/users/", {
+        .delete(this.url +"/api/vehicle-model/delete?", {
           params: {
-            id: id,
+            modelId: id,
           },
         })
         .then((response) => {
           this.view = response.data;
           console.log(this.view);
           alert("ลบข้อมูลสำเสร็จ");
-        });
-    },
-    cardetails(){
-
-      axios
-        .get(this.url + "/api/vehicle-model/show?", {
-          params: {
-            modelId: this.modelId,
-            
-          },
-        })
-        .then((response) => {
-          this.view = response.data;
-          alert(JSON.stringify(this.view));
-          console.log(this.view);
+          this.ListUsers();
         })
         .catch((error) => {
-          console.log(error);
-          this.erroredview = true;
-        })
-        .finally(() => (this.loadingview = false));
-
+          console.log(error.message);
+          alert(error.message);
+        });
     },
   },
 };
 </script>
+
+
+    
