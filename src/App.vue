@@ -23,23 +23,45 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link disabled">Vue js CRUD Application</a>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link active" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/Create">Create</router-link>
+              <h5>
+                <router-link class="nav-link" to="/"
+                  >Vue js CRUD Application</router-link
+                >
+              </h5>
             </li>
           </ul>
         </div>
+
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
       </div>
     </nav>
+<br>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          
+        </div>
+        <div class="col-10">
+          <router-view></router-view>
+        </div>
+        <div class="col">
 
-    <br />
 
-    <br />
-    <router-view></router-view>
+          <router-link to="/Create" type="button" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add</router-link>
+
+
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 <script>

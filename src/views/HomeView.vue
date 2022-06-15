@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <h1>List car</h1>
+          <h1>รายการรถ</h1>
           
           <br />
           <section v-if="erroredview">
@@ -21,37 +21,38 @@
               <table class="table table-sm">
                 <thead>
                   <tr>
-                    <th scope="col">ModelId</th>
+                    <th scope="col">รหัส (ระบบ) รุ่นรถ</th>
 
-                    <th scope="col">ModelCode</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">BrandName</th>
-                    <th scope="col">ModelYear</th>
-                    <th scope="col">Fuel</th>
+                    <th scope="col">รหัสรุ่นรถ</th>
+                    <th scope="col">ชื่อรุ่นรถ</th>
+                    <th scope="col">ยี่ห้อรถ</th>
+                    <th scope="col">ปีรถ</th>
+                    <th scope="col">การใช้น้ำมัน</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    v-for="currency in view.data"
-                    v-bind:key="currency.modelId"
+                    v-for="views in view.data"
+                    v-bind:key="views.modelId"
                   >
-                    <th scope="row">{{ currency.modelId }}</th>
-
-                    <td>{{ currency.modelCode }}</td>
-                    <td>{{ currency.name }}</td>
-                    <td>{{ currency.brandName }}</td>
-                    <td>{{ currency.modelYear }}</td>
-                    <td>{{ currency.fuel }}</td>
+                    <th scope="row">{{ views.modelId }}</th>
+                    <td>{{ views.modelCode }}</td>
+                    <td>{{ views.name }}</td>
+                    <td>{{ views.brandName }}</td>
+                    <td>{{ views.modelYear }}</td>
+                    <td v-if="views.fuel === 'D'">{{ viewfuel.D }}</td>
+                    <td v-if="views.fuel === 'S'">{{ viewfuel.S }}</td>
+                    
                     <td>
-                      <button
+                      <router-link class="btn btn-secondary" :to="{name:'Update',params:{id:views.modelId}}"><i class="bi bi-pencil-square"></i></router-link>
+                      &nbsp;<button
                         type="button"
                         class="btn btn-danger"
-                        @click="alertttt(currency.modelId)"
+                        @click="Deletealert(views.modelId)"
                       >
-                        Delete
-                      </button>&nbsp;
-                      <router-link class="btn btn-secondary" :to="{name:'Update',params:{id:currency.modelId}}">Edit</router-link>
+                        <i class="bi bi-trash"></i>
+                      </button>
                     </td>
                   </tr>
                   Total = {{ view.total }}
@@ -75,7 +76,7 @@ export default {
   data() {
     return {
       view: [],
-      viewbrand: [],
+      viewfuel: "",
       page: 1,
       perPage: 5,
       brandID: "",
@@ -88,7 +89,6 @@ export default {
     };
   },
   mounted() {
-    console.log();
     this.ListUsers();
   },
   methods: {
@@ -102,7 +102,9 @@ export default {
         })
         .then((response) => {
           this.view = response.data;
-          console.log(this.view);
+          this.viewfuel = response.data.statusLabel.fuel
+          //console.log(this.view);
+          
         })
         .catch((error) => {
           console.log(error);
@@ -111,7 +113,7 @@ export default {
         .finally(() => (this.loadingview = false));
     },
 
-    alertttt(id) {
+    Deletealert(id) {
       
       if (confirm("ต้องการ ลบข้อมูล หรือ ไม่?")) {
         this.Delete(id);

@@ -7,23 +7,37 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{
+      title:"หน้าแรก"
+    },
   },
   {
     path: '/Create',
     name: 'Create',
-    component: Create
+    component: Create,
+    meta:{
+      title:"เพิ่มข้อมูล"
+    },
   },
   {
     path: '/Update/:id',
     name: 'Update',
-    component: Update
+    component: Update,
+    meta:{
+      title:"แก้ไข"
+    },
   },
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
-})
+});
 
+router.beforeEach((to, from, next) =>{
+document.title = `${to.meta.title}`;  
+next();
+})
+ 
 export default router

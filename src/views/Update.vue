@@ -6,36 +6,35 @@
         <div class="col"></div>
         <div class="col-6">
           <form @submit.prevent="Update">
-            <h1>Edit</h1>
+            <h1>แก้ไข</h1>
             <div class="row">
               <div class="form-group">
-                <label for="exampleInputEmail1">ModelId</label>
+                <label for="exampleInputEmail1">รหัส (ระบบ) รุ่นรถ</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Enter BrandID"
                   v-model="applicantUpdate.modelId"
-                  disabled
+                  readonly
                 />
-                <small class="form-text text-muted">Enter your ModelId .</small>
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">BrandID</label>
+                <label for="exampleInputEmail1">รหัส (ระบบ) ยี่ห้อ</label>
                   
                 <select v-model="applicantUpdate.brandId" class="form-control" >
                   <option disabled value="">Please select one</option>
-                  <option v-for="currency in viewbrand" v-bind:value="currency.brandId">
-                    {{ currency.brandName }}
+                  <option v-for="views in viewbrand" v-bind:value="views.brandId">
+                    {{ views.brandName }}
                   </option>
                 </select>
-                <small class="form-text text-muted">Enter your BrandID .</small>
+                <small class="form-text text-muted">กรุณาเลือกรหัส (ระบบ) ยี่ห้อ</small>
                 
               </div>
 
               <div></div>
 
               <div class="form-group">
-                <label for="exampleInputPassword1">ModelCode</label>
+                <label for="exampleInputPassword1">รหัสรุ่นรถ</label>
                 <input
                   type="text"
                   class="form-control"
@@ -43,21 +42,21 @@
                   v-model="applicantUpdate.modelCode"
                 />
                 <small class="form-text text-muted"
-                  >Enter your ModelCode .</small
+                  >กรุณากรอกรหัสรุ่นรถ</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Name</label>
+                <label for="exampleInputPassword1">ชื่อรุ่นรถ</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Name"
                   v-model="applicantUpdate.name"
                 />
-                <small class="form-text text-muted">Enter your Name .</small>
+                <small class="form-text text-muted">กรุณากรอกชื่อรุ่นรถ</small>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">ModelYear</label>
+                <label for="exampleInputPassword1">ปีรถ</label>
                 <input
                   type="text"
                   class="form-control"
@@ -65,18 +64,18 @@
                   v-model="applicantUpdate.modelYear"
                 />
                 <small class="form-text text-muted"
-                  >Enter your ModelYear .</small
+                  >กรุณาเลือกปีรถ</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Fuel</label>
+                <label for="exampleInputPassword1">การใช้น้ำมัน</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Fuel"
                   v-model="applicantUpdate.fuel"
                 />
-                <small class="form-text text-muted">Enter your Fuel .</small>
+                <small class="form-text text-muted">กรุณาเลือก D = ดีเซล , S = เบนซิน</small>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               &nbsp;

@@ -8,7 +8,7 @@
             <h1>Create</h1>
             <div class="row">
               <div class="form-group">
-                <label for="exampleInputEmail1">BrandID</label>
+                <label for="exampleInputEmail1">เลือกยี่ห้อรถ</label>
 
                 <select v-model="applicant.brandId" class="form-control" >
                   <option disabled value="">Please select one</option>
@@ -16,13 +16,11 @@
                     {{ currency.brandName }}
                   </option>
                 </select>
-
-                <small class="form-text text-muted">Enter your BrandID .</small>
-                
+                <small class="form-text text-muted">กรุณาเลือกยี่ห้อรถ</small>
               </div>
 
               <div class="form-group">
-                <label for="exampleInputPassword1">ModelCode</label>
+                <label for="exampleInputPassword1">รหัสรุ่นรถ</label>
                 <input
                   type="text"
                   class="form-control"
@@ -30,11 +28,11 @@
                   v-model="applicant.modelCode"
                 />
                 <small class="form-text text-muted"
-                  >Enter your ModelCode .</small
+                  >กรุณากรอกรหัสรุ่นรถ</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Name</label>
+                <label for="exampleInputPassword1">ชื่อรุ่นรถ</label>
                 <input
                   type="text"
                   class="form-control"
@@ -42,11 +40,11 @@
                   v-model="applicant.name"
                 />
                 <small class="form-text text-muted"
-                  >Enter your Name .</small
+                  >กรุณากรอกชื่อรุ่นรถ</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">ModelYear</label>
+                <label for="exampleInputPassword1">ปีรถ</label>
                 <input
                   type="text"
                   class="form-control"
@@ -54,11 +52,11 @@
                   v-model="applicant.modelYear"
                 />
                 <small class="form-text text-muted"
-                  >Enter your ModelYear .</small
+                  >กรุณากรอกปีรถ</small
                 >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Fuel</label>
+                <label for="exampleInputPassword1">การใช้น้ำมัน</label>
                 <input
                   type="text"
                   class="form-control"
@@ -66,8 +64,20 @@
                   v-model="applicant.fuel"
                 />
                 <small class="form-text text-muted"
-                  >Enter your Fuel .</small
+                  >กรุณาเลือก D = ดีเซล , S = เบนซิน</small
                 >
+
+                  <br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                    <label class="form-check-label" for="inlineRadio1">D</label>
+                  </div><br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                    <label class="form-check-label" for="inlineRadio2">S</label>
+                  </div>
+
+
               </div>
 
               <button type="submit" class="btn btn-primary">Submit</button>
