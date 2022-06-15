@@ -65,40 +65,16 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+
 export default {
-  name: "home",
+  name: "App",
   data() {
     return {
-      view: [],
-      modelId: "",
-      url: "https://dms-backend-dev-dxvb7izyka-as.a.run.app",
-      loadingview: true,
-      erroredview: false,
+
     };
   },
   methods: {
-    cardetails() {
-      axios
-        .get(this.url + "/api/vehicle-model/show?", {
-          params: {
-            modelId: this.modelId,
-          },
-        })
-        .then((response) => {
-          this.view = response.data;
-          //alert(JSON.stringify(this.view));
-          console.log(this.view);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.erroredview = true;
-        })
-        .finally(() => {
-          this.loadingview = false;
-          return;
-        });
-    },
+    
   },
 };
 </script>

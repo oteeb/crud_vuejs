@@ -5,7 +5,7 @@
         <div class="col"></div>
         <div class="col-6">
           <form @submit="CreateForm">
-            <h1>Create</h1>
+            <h1>เพิ่มข้อมูล</h1>
             <div class="row">
               <div class="form-group">
                 <label for="exampleInputEmail1">เลือกยี่ห้อรถ</label>

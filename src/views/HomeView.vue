@@ -58,6 +58,7 @@
                   Total = {{ view.total }}
                 </tbody>
               </table>
+              
             </div>
           </section>
 
@@ -66,6 +67,7 @@
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 
