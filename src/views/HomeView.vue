@@ -183,10 +183,12 @@ export default {
         {
           key: "modelId",
           label: "รหัส (ระบบ) รุ่นรถ",
+          
         },
         {
           key: "modelCode",
           label: "รหัสรุ่นรถ",
+          
         },
         {
           key: "name",
@@ -200,7 +202,7 @@ export default {
         {
           key: "modelYear",
           label: "ปีรถ",
-          sortable: true,
+          
         },
         {
           key: "fuel",

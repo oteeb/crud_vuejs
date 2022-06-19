@@ -214,7 +214,7 @@ export default {
   mounted() {
     this.Listbrand();
     this.Listfuel();
-    this.applicant.modelYear='';
+    this.Clear();
   },
 
   computed: {
